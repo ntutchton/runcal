@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import reducer from './reducer';
+import settingsReducer from './settingsReducer';
 export default combineReducers({
- reducer
+ settingsReducer
 });

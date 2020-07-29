@@ -1,20 +1,20 @@
 import React from 'react';
 import './App.css';
 import { connect } from 'react-redux';
-import { action } from './actions/action';
+import { changeUnits } from './actions/settingsActions';
 
 const mapStateToProps = state => ({
   ...state
  })
 
 const mapDispatchToProps = dispatch => ({
-  d_action: () => dispatch(action())
+  changeUnits: (unit) => dispatch(changeUnits(unit))
 })
 
 class App extends React.Component {
 
-  reduxAction = (event) => {
-    this.props.d_action();
+  changeUnits = (event) => {
+    this.props.changeUnits('mi');
    }
 
   render(){
@@ -25,7 +25,7 @@ class App extends React.Component {
               JSON.stringify(this.props)
             }
           </pre>
-          <button onClick={this.reduxAction}>Test redux action</button>
+          <button onClick={this.changeUnits}>Test redux action</button>
       </div>
     )
   }
