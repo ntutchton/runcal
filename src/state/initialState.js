@@ -1,8 +1,9 @@
 import moment from 'moment'
 import Week from '../classes/week'
-import TrainingWeek from '../classes/trainingWeek'
+import { TrainingWeekService } from '../services/trainingWeek'
 
 export default function getInitialState() {
+    let trainingWeek = TrainingWeekService.createDefaultTrainingWeek()
     return {
         user: {
             name: 'user'
@@ -23,8 +24,8 @@ export default function getInitialState() {
             current: {
                 weeklyDistance: 0,
             }, 
-            weeks: [new Week(new TrainingWeek(), 10)], //temp for testing
-            trainingWeek: new TrainingWeek()
+            weeks: [new Week(trainingWeek, 15)], //temp for testing
+            trainingWeek: trainingWeek
         }],
     }
 }

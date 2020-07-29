@@ -2,9 +2,9 @@ import Training from '../enums/training'
 
 export default class TrainingDay {
     
-    constructor(type = Training.OFF, percent = 0){
+    constructor(type = Training.OFF, intensityFactor = 0){
         this.type = type
-        this.percent = percent //percent of weekly milage
+        this.intensityFactor = intensityFactor //more-or-less a percent of weekly milage
     }
     
 }
