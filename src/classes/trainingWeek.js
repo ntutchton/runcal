@@ -1,4 +1,3 @@
-import Training from '../enums/training'
 import TrainingDay from '../classes/trainingDay'
 
 export default class TrainingWeek {

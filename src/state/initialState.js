@@ -8,8 +8,10 @@ export default function getInitialState() {
         user: {
             name: 'user'
         },
-        settings: {
-            units: 'km'
+        system: {
+            units: 'km',
+            theme: 'light',
+            activePlan: 0, //index of selected, active plan
         },
         plans: [{
             start: moment().format(),

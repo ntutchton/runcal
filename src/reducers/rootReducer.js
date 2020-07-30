@@ -1,5 +1,8 @@
 import { combineReducers } from 'redux';
-import settingsReducer from './settingsReducer';
+import system from './systemReducer';
+import plans from './planReducer';
+
 export default combineReducers({
- settingsReducer
+ system,
+ plans
 });
