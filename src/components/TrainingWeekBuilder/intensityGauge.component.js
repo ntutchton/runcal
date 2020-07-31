@@ -72,7 +72,7 @@ function IntensityGauge(props){
                 title="What is Intensity?"
                 text="Intensity is a number 0-100 that indicates the distance of a run relative to your weekly training.  
                 Intensity levels 0-10 are easy, short runs, while high intensity levels are longer and more difficult.
-                Generally speaking, it is safest to keep your longest run of the week under 65 during normal training."/>
+                Generally speaking, it is safest to keep the intensity of your longest run under 65 during normal training."/>
             </span>
         </div> 
     )

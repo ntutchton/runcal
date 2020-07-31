@@ -15,6 +15,9 @@ const styles = theme => ({
     root: {
         margin: '5% 10%'
     },
+    title:{
+        marginBottom: theme.spacing(5)
+    },
     training_chip_wrapper: {
         background: theme.palette.grey[100],
         padding: theme.spacing(2),
@@ -39,7 +42,7 @@ const styles = theme => ({
         
     },
     save_button_wrapper: {
-        textAlign: 'center',
+        textAlign: 'right',
         padding: theme.spacing(5)
     },
   });
@@ -101,6 +104,10 @@ class TrainingWeekBuilder extends React.Component {
 
         return (
             <div className={classes.root}>
+                 <Typography className={classes.title} align="center" variant="h4" component="div">
+                    Training Schedule
+                </Typography>
+
                 <div className={classes.training_chip_wrapper}>
                     <Typography 
                         align="center"
