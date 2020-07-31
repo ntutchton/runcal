@@ -1,27 +1,51 @@
 import React from 'react'
 import moment from 'moment'
-import TrainingDay from './trainingDay.component'
+import TrainingDay from '../../classes/trainingDay'
+import TrainingDayComponent from './trainingDay.component'
 import TrainingChip from './trainingChip.component'
 import Training from '../../enums/training'
 import { connect } from 'react-redux';
 import { updateTrainingWeek } from '../../actions/planActions';
 import { withTheme, withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { Typography } from '@material-ui/core'
+import TouchIcon from '@material-ui/icons/TouchAppTwoTone';
 
 const styles = theme => ({
     root: {
-    //   background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
         margin: '5% 10%'
     },
-    training_types: {
+    training_chip_wrapper: {
+        background: theme.palette.grey[100],
+        padding: theme.spacing(2),
+        marginBottom: theme.spacing(1),
+        borderRadius: '2px'
+    },
+    training_chip_text: {
+        marginBottom: theme.spacing(3)
+    },
+    touchIcon: {
+        marginRight: theme.spacing(1)
+    },
+    training_chips: {
         display: 'flex',
+        transform: 'scale(1.2)',
         justifyContent: 'center',
-        margin: theme.spacing(4)
+        margin: theme.spacing(1)
     },
     training_days: {
         display: 'flex',
         alignItems: 'stretch',
         
+    },
+    save_button_wrapper: {
+        textAlign: 'center',
+        padding: theme.spacing(5)
+    },
+    save_button: {
+        '&:enabled':{
+            background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+        }
     }
   });
 
@@ -31,7 +55,7 @@ const mapStateToProps = state => ({
 })
   
 const mapDispatchToProps = dispatch => ({
-    updateTrainingWeek: (trainingWeek) => dispatch(updateTrainingWeek(trainingWeek))
+    updateTrainingWeek: (trainingWeek, index) => dispatch(updateTrainingWeek(trainingWeek, index))
 })
 
 class TrainingWeekBuilder extends React.Component {
@@ -39,41 +63,74 @@ class TrainingWeekBuilder extends React.Component {
     state = {
         trainingWeek: this.props.trainingWeek,
         weekdays: moment.weekdays(),
-        trainingTypes: Object.keys(Training)
+        trainingTypes: Object.keys(Training),
+        showDragTargets: false
     }
 
-    updateTrainingDay = (event, newDay, index) => {
+    //weekday name, training day type ('TYPE' or 'INTENSITY), and new value
+    updateTrainingDay = (name, value, type) => {
+        let index = this.state.weekdays.indexOf(name)
         this.setState({
             ...this.state,
-            trainingWeek: this.state.trainingWeek.map((day, i) => {
-                if (index === i) {
-                    return newDay
-                } else return day
-            })
+            trainingWeek: {
+                ...this.state.trainingWeek,
+                days: this.state.trainingWeek.days.map((day, i) => {
+                    if (index === i) {
+                        switch(type){
+                            case 'TYPE':
+                                return new TrainingDay(Training[value], day.intensityFactor)
+                            case 'INTENSITY':
+                                return new TrainingDay(day.type, value)
+                            default:
+                                return new TrainingDay()
+                        }
+                    } else return day
+                })
+            }
+        })
+    }
+
+    toggleDragTargets = () => {
+        this.setState({
+            ...this.state,
+            showDragTargets : !this.state.showDragTargets
         })
     }
 
     updateTrainingWeek = (event) => {
+        console.log(this.props.planIndex)
         this.props.updateTrainingWeek(this.state.trainingWeek, this.props.planIndex);
     }
 
     render(){
         const { classes } = this.props;
+
         return (
             <div className={classes.root}>
-                <div className={classes.training_types}>
-                {
-                    this.state.trainingTypes.map(trainingType => (
-                        <TrainingChip 
-                            key={trainingType}
-                            type={trainingType}/>
-                    ))
-                }
+                <div className={classes.training_chip_wrapper}>
+                    <Typography 
+                        align="center"
+                        variant="h6"
+                        className={classes.training_chip_text}>
+                        <TouchIcon style={{ fontSize: 30 }} className={classes.touchIcon}/>
+                        Drag and drop to customize your weekly schedule.
+                    </Typography>
+                    <div className={classes.training_chips}>
+                    {
+                        this.state.trainingTypes.map(trainingType => (
+                            <TrainingChip
+                                key={trainingType}
+                                draggable={true}
+                                toggleDragTargets={this.toggleDragTargets}
+                                type={trainingType}/>
+                        ))
+                    }
+                    </div>
                 </div>
                 <div className={classes.training_days}>
                 {
                     this.state.weekdays.map((name, index) => (
-                        <TrainingDay 
+                        <TrainingDayComponent 
                             name={name} 
                             key={name}
                             updateDay={this.updateTrainingDay}
@@ -82,12 +139,16 @@ class TrainingWeekBuilder extends React.Component {
                     ))
                 }
                 </div>
-                <Button 
-                    onClick={this.updateTrainingWeek}
-                    variant="contained" 
-                    color="primary">
-                    Save Changes
-                </Button>
+                <div className={classes.save_button_wrapper}>
+                    <Button 
+                        className={classes.save_button}
+                        onClick={this.updateTrainingWeek}
+                        variant="contained" 
+                        disabled={this.state.trainingWeek === this.props.trainingWeek}
+                        color="primary">
+                        Save Changes
+                    </Button>
+                </div>
             </div>
         )
     }

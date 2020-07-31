@@ -10,6 +10,9 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+
 import { Splash } from './components/Splash'
 import { PlanBuilder } from './components/PlanBuilder'
 
@@ -31,27 +34,29 @@ class App extends React.Component {
     return (
       <Router>
         <ThemeProvider theme={lightTheme}>
-          <div>
-            <ul>
-              <li>
-                <Link to="/">Welcome</Link>
-              </li>
-              <li>
-                <Link to="/plan-builder">Build Plan</Link>
-              </li>
-            </ul>
+          <DndProvider backend={HTML5Backend}>
+            <div>
+              <ul>
+                <li>
+                  <Link to="/">Welcome</Link>
+                </li>
+                <li>
+                  <Link to="/plan-builder">Build Plan</Link>
+                </li>
+              </ul>
 
-            <hr />
+              <hr />
 
-            <Switch>
-              <Route exact path="/">
-                <Splash />
-              </Route>
-              <Route path="/plan-builder">
-                <PlanBuilder />
-              </Route>
-            </Switch>
-          </div>
+              <Switch>
+                <Route exact path="/">
+                  <Splash />
+                </Route>
+                <Route path="/plan-builder">
+                  <PlanBuilder />
+                </Route>
+              </Switch>
+            </div>
+          </DndProvider>
         </ThemeProvider>
       </Router>
     )
