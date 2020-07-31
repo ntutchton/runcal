@@ -42,11 +42,6 @@ const styles = theme => ({
         textAlign: 'center',
         padding: theme.spacing(5)
     },
-    save_button: {
-        '&:enabled':{
-            background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        }
-    }
   });
 
 const mapStateToProps = state => ({
@@ -98,7 +93,6 @@ class TrainingWeekBuilder extends React.Component {
     }
 
     updateTrainingWeek = (event) => {
-        console.log(this.props.planIndex)
         this.props.updateTrainingWeek(this.state.trainingWeek, this.props.planIndex);
     }
 
@@ -141,7 +135,6 @@ class TrainingWeekBuilder extends React.Component {
                 </div>
                 <div className={classes.save_button_wrapper}>
                     <Button 
-                        className={classes.save_button}
                         onClick={this.updateTrainingWeek}
                         variant="contained" 
                         disabled={this.state.trainingWeek === this.props.trainingWeek}
