@@ -3,31 +3,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, withTheme } from '@material-ui/core/styles';
 import GaugeChart from 'react-gauge-chart'
 import TextField from '@material-ui/core/TextField';
-import NumberFormat from 'react-number-format';
 import InfoButton from '../shared/infoButton.component'
-
-
-function NumberFormatCustom(props) {
-    const { inputRef, onChange, ...other } = props;
-  
-    return (
-      <NumberFormat
-        {...other}
-        getInputRef={inputRef}
-        onValueChange={(values) => {
-          onChange({
-            target: {
-              name: props.name,
-              value: values.value,
-            },
-          });
-        }}
-        thousandSeparator
-        isNumericString
-        allowNegative={false}
-      />
-    );
-  }
+import {NumberFormatIntensity} from '../shared/numberFormatInput.component'
 
   
 
@@ -46,16 +23,11 @@ const useStyles = makeStyles((theme) => ({
 function IntensityGauge(props){
     const classes = useStyles(props);
     
-    const [values, setValues] = React.useState({
-        numberformat: props.trainingDay.intensityFactor,
-      });
+    const [intensity, setIntensity] = React.useState(props.trainingDay.intensityFactor);
     
     const handleChange = (event) => {
-    setValues({
-        ...values,
-        [event.target.name]: event.target.value,
-    });
-    props.updateDay(props.name, event.target.value, 'INTENSITY')
+      setIntensity(event.target.value);
+      props.updateDay(props.name, event.target.value, 'INTENSITY')
     };
 
     const label = (
@@ -70,9 +42,9 @@ function IntensityGauge(props){
             <span style={{marginTop: '-4px'}}>
                 <InfoButton
                 title="What is Intensity?"
-                text="Intensity is a number 0-100 that indicates the distance of a run relative to your weekly training.  
-                Intensity levels 0-10 are easy, short runs, while high intensity levels are longer and more difficult.
-                Generally speaking, it is safest to keep the intensity of your longest run under 65 during normal training."/>
+                text="Intensity is a number 0-100 that indicates the effort of a run relative to your weekly distance goals.  
+                You can think of intensity of a percentage of you biggest run of the week.
+                Generally speaking, it is safest to only run once per week at 100% intensity."/>
             </span>
         </div> 
     )
@@ -83,7 +55,7 @@ function IntensityGauge(props){
         className={classes.root}>
         <GaugeChart id={props.name} 
             className={classes.gauge} 
-            arcsLength={[.1, .25, .30, .45]}
+            arcsLength={[.25, .25, .25, .25]}
             arcPadding={0.02} 
             cornerRadius={3} 
             colors={["#00ff00", "ffdd00", "#ffaa00", "#ff0000"]}
@@ -93,16 +65,15 @@ function IntensityGauge(props){
                 variant="standard"
                 type="number"
                 label={label}
-                value={values.numberformat}
+                value={intensity}
                 onChange={handleChange}
-                name="numberformat"
-                id="formatted-numberformat-input"
+                name="numberformatinput"
                 inputProps={{style: { 
                     textAlign: 'center',
                     fontSize: '40px'
                 }}}
                 InputProps={{
-                    inputComponent: NumberFormatCustom,
+                    inputComponent: NumberFormatIntensity,
                 }}
                 InputLabelProps={{ shrink: true }}
             />

@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { connect } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core/styles';
 import lightTheme from './themes/light.theme'
@@ -12,9 +11,14 @@ import {
 } from "react-router-dom";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-
 import { Splash } from './components/Splash'
 import { PlanBuilder } from './components/PlanBuilder'
+import { PlanViewer } from './components/PlanViewer'
+
+//react-dates stuff
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+import './themes/react-dates-overrides.css';
 
 const mapStateToProps = state => ({
   ...state
@@ -43,6 +47,9 @@ class App extends React.Component {
                 <li>
                   <Link to="/plan-builder">Build Plan</Link>
                 </li>
+                <li>
+                  <Link to="/plan-viewer">View Plan</Link>
+                </li>
               </ul>
 
               <hr />
@@ -54,12 +61,15 @@ class App extends React.Component {
                 <Route path="/plan-builder">
                   <PlanBuilder />
                 </Route>
+                <Route path="/plan-viewer">
+                  <PlanViewer />
+                </Route>
               </Switch>
             </div>
-          </DndProvider>
-        </ThemeProvider>
-      </Router>
-    )
+        </DndProvider>
+      </ThemeProvider>
+    </Router>
+  )
   }
 }
 

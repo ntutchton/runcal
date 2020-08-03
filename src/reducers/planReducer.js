@@ -11,6 +11,12 @@ export default (state = getInitialState().plans, action) => {
                 }
             } else return plan
         })
+    case 'UPDATE_TRAINING_PLAN':
+        return state.map((plan, index) => {
+                if (index === action.index){
+                    return action.payload
+                } else return plan
+            })
      default:
       return state
     }

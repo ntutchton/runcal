@@ -1,13 +1,14 @@
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
+import grey from '@material-ui/core/colors/grey';
 
 let theme = createMuiTheme({
     palette: {
       training: {
         OFF: {
-          main: '#424242',
-          light: '#b3b3b3',
-          text: '#FFF'
+          main: grey[400],
+          light: grey[100],
+          text: '#000'
         },
         PACE: {
           main: '#00e676',

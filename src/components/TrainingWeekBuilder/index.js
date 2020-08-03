@@ -13,7 +13,7 @@ import TouchIcon from '@material-ui/icons/TouchAppTwoTone';
 
 const styles = theme => ({
     root: {
-        margin: '5% 10%'
+        margin: '0% 10%'
     },
     title:{
         marginBottom: theme.spacing(5)
@@ -104,17 +104,23 @@ class TrainingWeekBuilder extends React.Component {
 
         return (
             <div className={classes.root}>
-                 <Typography className={classes.title} align="center" variant="h4" component="div">
+                 {/* <Typography className={classes.title} align="center" variant="h4" component="div">
                     Training Schedule
-                </Typography>
+                </Typography> */}
 
                 <div className={classes.training_chip_wrapper}>
+                    {/* <Typography 
+                        align="center"
+                        variant="h6"
+                        className={classes.training_chip_text}>
+                        – OR –
+                    </Typography> */}
                     <Typography 
                         align="center"
                         variant="h6"
                         className={classes.training_chip_text}>
                         <TouchIcon style={{ fontSize: 30 }} className={classes.touchIcon}/>
-                        Drag and drop to customize your weekly schedule.
+                        Drag and drop to customize your weekly schedule!
                     </Typography>
                     <div className={classes.training_chips}>
                     {
@@ -146,7 +152,7 @@ class TrainingWeekBuilder extends React.Component {
                         variant="contained" 
                         disabled={this.state.trainingWeek === this.props.trainingWeek}
                         color="primary">
-                        Save Changes
+                        Save Schedule
                     </Button>
                 </div>
             </div>

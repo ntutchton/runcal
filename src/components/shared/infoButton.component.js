@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-
+        color: 'rgba(0, 0, 0, 0.54)'
     },
     button: {
         '&:hover': {

@@ -1,5 +1,6 @@
 import moment from 'moment'
 import Week from '../classes/week'
+import convert from 'convert-units'
 import { TrainingWeekService } from '../services/trainingWeek'
 
 export default function getInitialState() {
@@ -9,22 +10,35 @@ export default function getInitialState() {
             name: 'user'
         },
         system: {
-            units: 'km',
+            /* looks like this:
+            {
+                abbr:"km"
+                measure:"length"
+                system:"metric"
+                singular:"Kilometer"
+                plural:"Kilometers"
+
+            }
+            */
+            preferredUnit: convert().describe('mi'),
             theme: 'light',
             activePlan: 0, //index of selected, active plan
         },
         plans: [{
-            start: moment().format(),
-            end: null,
+            term: {
+                startDate: moment(),
+                endDate: null,
+            },
             id: 1,
             name: 'Plan 1',
-            recovery: true,
+            recoveryWeeks: true,
+            tenPercentRule: true,
             goal: {
-                distance: 1000,
-                weeklyDistance : 50,
+                distance: 50,
+                // weeklyDistance : 10,
             },
             current: {
-                weeklyDistance: 0,
+                distance: 6,
             }, 
             weeks: [new Week(trainingWeek, 15)], //temp for testing
             trainingWeek: trainingWeek
